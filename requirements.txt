@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+starkbank
+python-dotenv
+httpx
+apscheduler
+faker
