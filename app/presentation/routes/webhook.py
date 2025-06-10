@@ -1,18 +1,13 @@
-from fastapi import APIRouter, Header, HTTPException
+# app/presentation/routes/webhook.py
+from fastapi import APIRouter, Header, HTTPException, Request
 from app.infrastructure.stark.webhook_api import handle_webhook
-from app.schemas.webhook import WebhookPayload 
+from app.presentation.schemas.webhook import WebhookPayload 
 
 router = APIRouter()
 
-@router.post("/starkbank")
+@router.post("/webhook", response_model=WebhookPayload)
 async def starkbank_webhook(
-    payload: WebhookPayload,
-    digital_signature: str = Header(..., convert_underscores=False)
+    request: Request,
+    digital_signature: str = Header(..., alias="Digital-Signature")
 ):
-    """
-    Endpoint to handle StarkBank webhook events.
-    """
-    try:
-        return await handle_webhook(payload.dict(), digital_signature)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    return await handle_webhook(request, digital_signature)
