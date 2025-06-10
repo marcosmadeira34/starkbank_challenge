@@ -1,3 +1,4 @@
+# app/main.py
 from fastapi import FastAPI
 from app.presentation.routes import webhook
 from app.scheduler.invoice_job import start_invoice_scheduler
@@ -15,7 +16,7 @@ app = FastAPI(
     }
 )
 # Include the router 
-app.include_router(webhook.router, prefix="/webhook", tags=["webhook"])
+app.include_router(webhook.router, prefix="/v2", tags=["webhook"])
 
 @app.get("/")
 async def root():
