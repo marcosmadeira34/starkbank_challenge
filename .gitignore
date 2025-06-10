@@ -112,7 +112,8 @@ ehthumbs.db
 Desktop.ini
 
 # PEM files (private keys, certificates)
-# *.pem
+*.pem
+*.key
 
 # virtual environment directories
 venv/
