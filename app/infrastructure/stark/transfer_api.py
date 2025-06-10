@@ -11,10 +11,20 @@ DESTINATION_ACCOUNT = {
 }
 
 
-def send_transfer(amount: int):
+def send_transfer(invoice_id: str, amount: int):
+    print(f"DEBUG (send_transfer): Initial amount type: {type(amount)}, value: {amount}")
+    if isinstance(amount, list):
+        amount = amount[0]
+        print(f"DEBUG (send_transfer): Amount after list conversion: {type(amount)}, value: {amount}")
+
+    print(f"Preparing to send transfer for amount: {amount} cents")
+
     try:
-        fee = int(amount * 0.01) # tax simulated as 1% of the amount
+        fee = int(amount * 0.01)
+        print(f"DEBUG (send_transfer): Fee calculated: {fee} (type: {type(fee)})")
         net_amount = amount - fee
+        print(f"DEBUG (send_transfer): Net amount calculated: {net_amount} (type: {type(net_amount)})")
+
         transfer = starkbank.Transfer(
             amount=net_amount,
             bank_code=DESTINATION_ACCOUNT["bank_code"],
@@ -28,8 +38,7 @@ def send_transfer(amount: int):
 
         created = starkbank.transfer.create([transfer])
         print(f"Transfer sent: {created[0].id} for {created[0].amount} cents")  
-        return created[0]  # Return the created transfer object
+        return created[0]
     except Exception as e:
         print(f"Error sending transfer: {str(e)}")
         raise
-
