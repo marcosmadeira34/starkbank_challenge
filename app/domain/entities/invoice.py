@@ -1,3 +1,4 @@
+# app/domain/entities/invoice.py
 from datetime import datetime
 from uuid import uuid4
 
