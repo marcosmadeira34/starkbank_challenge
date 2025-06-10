@@ -1,3 +1,4 @@
+# app/infrastructure/stark/client.py
 import starkbank
 from app.core.config import settings
 
@@ -12,3 +13,4 @@ def initialize_stark_client():
         private_key=private_key
     )
 
+    print("StarkBank client initialized with project ID:", settings.STARK_PROJECT_ID)
