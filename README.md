@@ -1,9 +1,5 @@
 # 💼 The Challenge - Stark Bank
 
-## 🗓️ Deadline
-
-You have until **August 31th, midnight BRT**, seven days from now to deliver your answer.
-
 ## 🧪 Task
 
 You will receive an invitation to join a **Sandbox account** in your email as an **Admin**.
