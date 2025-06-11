@@ -94,7 +94,7 @@ We hope to hear from you soon!
 }
 ```
 
-# How to run the example
+# How to run this project
 
 ```bash
 # Clone the repository
