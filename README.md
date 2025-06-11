@@ -93,3 +93,26 @@ We hope to hear from you soon!
   }
 }
 ```
+
+# How to run the example
+
+```bash
+# Clone the repository
+git clone repo_url_here
+# Go to the project directory
+cd stark_challenge
+# Create a virtual environment (optional but recommended) and activate it virtualenv venv
+python -m venv venv && source venv/bin/activate
+# Install dependencies
+pip install -r requirements.txt
+# Create a .env file with your Stark Bank credentials
+# Example .env file
+# STARK_BANK_PROJECT_ID=your_project_id
+# STARK_BANK_PRIVATE_KEY=your_private_key
+# STARK_ENVIRONMENT=sandbox
+# STARK_WEBHOOK_URL=http://API.localhost:8000/v2/webhook
+
+
+# Run the FastAPI app
+uvicorn app.main:app --reload
+```
