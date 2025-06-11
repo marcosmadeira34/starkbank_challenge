@@ -1,4 +1,8 @@
+# app/infrastructure/stark/transfer_api.py
 import starkbank
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 DESTINATION_ACCOUNT = {
@@ -12,19 +16,28 @@ DESTINATION_ACCOUNT = {
 
 
 def send_transfer(invoice_id: str, amount: int):
-    print(f"DEBUG (send_transfer): Initial amount type: {type(amount)}, value: {amount}")
+    logger.debug(f"Attempting to send transfer for invoice ID: {invoice_id}")
+    logger.debug(f"Initial transfer amount received: {amount} (type: {type(amount)})")
+    
     if isinstance(amount, list):
+        logger.warning(f"Amount for transfer was a list ({amount}), expected int. Using first element.")
         amount = amount[0]
-        print(f"DEBUG (send_transfer): Amount after list conversion: {type(amount)}, value: {amount}")
-
-    print(f"Preparing to send transfer for amount: {amount} cents")
+        logger.debug(f"Amount after list conversion: {amount} (type: {type(amount)})")
 
     try:
-        fee = int(amount * 0.01)
-        print(f"DEBUG (send_transfer): Fee calculated: {fee} (type: {type(fee)})")
-        net_amount = amount - fee
-        print(f"DEBUG (send_transfer): Net amount calculated: {net_amount} (type: {type(net_amount)})")
+        # Calculate the fee and net amount for the transfer
+        if not isinstance(amount, int):
+            raise ValueError(f"Expected amount to be an int, got {type(amount)} with value {amount}")
+        if amount <= 0:
+            raise ValueError(f"Invalid amount for transfer: {amount}. Must be a positive integer.")
+        logger.debug(f"Calculating fee for transfer amount: {amount} cents.")
+        # Assuming a 1% fee for the transfer
 
+        fee = int(amount * 0.01)
+        net_amount = amount - fee
+        logger.debug(f"Net amount for transfer: {net_amount} cents.")
+
+        # Create a transfer object with the necessary details
         transfer = starkbank.Transfer(
             amount=net_amount,
             bank_code=DESTINATION_ACCOUNT["bank_code"],
@@ -33,12 +46,13 @@ def send_transfer(invoice_id: str, amount: int):
             tax_id=DESTINATION_ACCOUNT["tax_id"],
             name=DESTINATION_ACCOUNT["name"],
             account_type=DESTINATION_ACCOUNT["account_type"],
-            tags=["invoice-payment"]
+            tags=["transfer"]
         )
 
         created = starkbank.transfer.create([transfer])
-        print(f"Transfer sent: {created[0].id} for {created[0].amount} cents")  
+        logger.info(f"Transfer created successfully: {created[0].id} for invoice {invoice_id}")
         return created[0]
     except Exception as e:
-        print(f"Error sending transfer: {str(e)}")
+        logger.critical(f"Error sending transfer for invoice {invoice_id}: {str(e)}")
+        logger.debug("Raising exception to be handled by the caller.")
         raise
