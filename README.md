@@ -67,3 +67,29 @@ Earn extra credit if you:
 We hope to hear from you soon!
 
 — **Stark Bank Developers and HR**
+
+# Example of the body for a request to the webhook endpoint
+
+```json
+{
+  "event": {
+    "log": {
+      "id": "59616010000002",
+      "type": "invoice",
+      "invoice": {
+        "id": "inv_simulacao_17945",
+        "amount": 17945,
+        "name": "Cliente Teste",
+        "taxId": "00000000000",
+        "status": "paid",
+        "created": "2024-06-10T14:00:00.000Z"
+      }
+    },
+    "id": "59616010000001",
+    "subscription": "invoice",
+    "type": "credited",
+    "isDelivered": false,
+    "created": "2024-06-10T14:00:00.000Z"
+  }
+}
+```
