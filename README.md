@@ -28,8 +28,8 @@ When you finish your app:
 
 1. Publish your code to a **public repository** (GitHub, GitLab, etc).
 2. Send an email to:
-   - 📧 developers@starkbank.com
-   - 📧 natally.novaes@starkbank.com  
+   - 📧
+   - 📧  
      with the repository **link** so we can take a look at your code.
 
 You should receive a reply from us in **up to one week** with our evaluation and, if all goes well, an invite for a chat.
