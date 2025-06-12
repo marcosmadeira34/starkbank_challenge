@@ -15,7 +15,7 @@ DESTINATION_ACCOUNT = {
 }
 
 
-def send_transfer(invoice_id: str, amount: int):
+async def send_transfer(invoice_id: str, amount: int):
     logger.debug(f"Attempting to send transfer for invoice ID: {invoice_id}")
     logger.debug(f"Initial transfer amount received: {amount} (type: {type(amount)})")
     
@@ -49,7 +49,7 @@ def send_transfer(invoice_id: str, amount: int):
             tags=["transfer"]
         )
 
-        created = starkbank.transfer.create([transfer])
+        created = await starkbank.transfer.create([transfer])
         logger.info(f"Transfer created successfully: {created[0].id} for invoice {invoice_id}")
         return created[0]
     except Exception as e:
