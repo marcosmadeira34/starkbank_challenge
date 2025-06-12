@@ -7,6 +7,7 @@ import logging
 import sys
 from time import sleep
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, 
                     stream=sys.stdout, # Directs logs to the console (standard output)
