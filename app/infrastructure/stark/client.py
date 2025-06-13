@@ -1,7 +1,6 @@
 # app/infrastructure/stark/client.py
 import starkbank
 from app.core.config import settings
-from colorama import Fore, Style
 from starkcore import error as starkcore
 import logging
 
@@ -9,14 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 def initialize_stark_client():
+   
     try:
-        with open(settings.STARK_PRIVATE_KEY_PATH, "r") as file:
-            private_key = file.read()
-
         starkbank.user = starkbank.Project(
             environment=settings.ENVIRONMENT,
             id=settings.STARK_PROJECT_ID,
-            private_key=private_key
+            private_key=settings.STARK_PRIVATE_KEY_VALUE
         )
 
         logger.info(f"StarkBank client initialized with project ID: {starkbank.user.id}")
@@ -66,7 +63,7 @@ def initialize_webhook_client():
             logger.warning(f"Webhook URL {webhook_url} is already registered. This might happen during \
                            development restarts. Please ensure the webhook is unique or handle reuse carefully.")
         else:
-            print(Fore.LIGHTRED_EX + f"Error initializing webhook client: {e}" + Style.RESET_ALL)
+            logger.error(f"Error initializing webhook client: {e}", exc_info=True)
             raise 
     except Exception as e:
         logger.error(f"Unexpected error initializing webhook client: {e}", exc_info=True)

@@ -39,6 +39,6 @@ def start_invoice_scheduler():
     """
     scheduler = BackgroundScheduler()
     end_time = datetime.now() + timedelta(hours=24)  # Run for 1 day
-    scheduler.add_job(invoice_job, 'interval', hours=3, end_date=end_time)
+    scheduler.add_job(invoice_job, 'interval', seconds=10, end_date=end_time)
     scheduler.start()
     logger.info("Invoice scheduler job started.")
