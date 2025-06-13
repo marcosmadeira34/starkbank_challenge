@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .  # Build the image from the current directory
+    ports:
+      - "80:8000"  # Map host port 80 to container port 8000
+    environment:
+      # Set environment variables from the host environment
+      - STARK_PRIVATE_KEY_PATH: ${STARK_PRIVATE_KEY_PATH}
+      - STARK_PROJECT_ID: ${STARK_PROJECT_ID}
+    restart: always  # Always restart the container if it stops
