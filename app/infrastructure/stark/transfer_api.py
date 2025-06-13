@@ -49,7 +49,7 @@ async def send_transfer(invoice_id: str, amount: int):
             tags=["transfer"]
         )
 
-        created = starkbank.transfer.create([transfer])
+        created = await starkbank.transfer.create([transfer])
         logger.info(f"Transfer created successfully: {created[0].id} for invoice {invoice_id}")
         return created[0]
     except Exception as e:
