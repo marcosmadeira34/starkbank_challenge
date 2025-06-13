@@ -6,5 +6,7 @@ services:
     environment:
       # Set environment variables from the host environment
       - STARK_PRIVATE_KEY_VALUE=${STARK_PRIVATE_KEY_VALUE}
-      - STARK_PROJECT_ID=${STARK_PROJECT_ID}
+      - STARK_PROJECT_ID=${STARK_PROJECT_ID}  
+    volumes:
+      - ./private_key.pem:/app/private_key.pem:ro
     restart: always  # Always restart the container if it stops
