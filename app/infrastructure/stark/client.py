@@ -1,7 +1,7 @@
 # app/infrastructure/stark/client.py
 import starkbank
 from app.core.config import settings
-from starkcore import error as starkcore
+from starkcore.error import InputErrors as starkcore
 import logging
 
 
